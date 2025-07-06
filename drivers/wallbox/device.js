@@ -7,7 +7,7 @@ const WallboxAPI = require('../../lib/wallbox_api');
 
 const statuses = status_util.statuses;
 
-const POLL_INTERVAL = 15;
+const POLL_INTERVAL = 61;  // Follow API guidelines
 
 class wallbox_charger extends Homey.Device {
 
@@ -28,7 +28,7 @@ class wallbox_charger extends Homey.Device {
       this.setSettings({ polling: POLL_INTERVAL});
 
     // Setup polling of device
-    this.polling = this.homey.setInterval(this.poll.bind(this), 1000 * this.getSetting('polling'));
+    this.polling = this.homey.setInterval(this.poll.bind(this), 1000 * POLL_INTERVAL);
     this.authentication = this.homey.setInterval(this._api.authenticate.bind(this._api), 1000 * 60 * 60 * 24 * 2); // Reauthenticate every 2d
     await this.poll();
 
